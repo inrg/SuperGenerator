@@ -1,0 +1,9 @@
+D:\Project\SuperGenerator\SuperGeneratorX\bin\Release\SuperGeneratorX.exe.config
+D:\Project\SuperGenerator\SuperGeneratorX\bin\Release\SuperGeneratorX.exe
+D:\Project\SuperGenerator\SuperGeneratorX\bin\Release\SuperGeneratorX.pdb
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.Properties.Resources.resources
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.csproj.GenerateResource.cache
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.csproj.CoreCompileInputs.cache
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.exe
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.pdb
+D:\Project\SuperGenerator\SuperGeneratorX\obj\Release\SuperGeneratorX.MainForm.resources
