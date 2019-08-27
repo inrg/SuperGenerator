@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperGen", "SuperGen.csproj", "{4B03ECC2-EC87-44AA-B26F-E264332FBDC6}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{6843B555-AB43-40D7-934F-4D7BD8DEA0AE}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProject\SharedProject.projitems*{4b03ecc2-ec87-44aa-b26f-e264332fbdc6}*SharedItemsImports = 4
+		SharedProject\SharedProject.projitems*{6843b555-ab43-40d7-934f-4d7bd8dea0ae}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B03ECC2-EC87-44AA-B26F-E264332FBDC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B03ECC2-EC87-44AA-B26F-E264332FBDC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B03ECC2-EC87-44AA-B26F-E264332FBDC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B03ECC2-EC87-44AA-B26F-E264332FBDC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF02D1E0-5D03-4B86-8F7E-E2B688DD1F0C}
+	EndGlobalSection
+EndGlobal

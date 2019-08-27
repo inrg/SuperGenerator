@@ -1,0 +1,6 @@
+D:\Project\SuperGenerator\SuperGen\obj\Debug\SuperGen.csproj.CoreCompileInputs.cache
+D:\Project\SuperGenerator\SuperGen\bin\Debug\SuperGen.exe.config
+D:\Project\SuperGenerator\SuperGen\bin\Debug\SuperGen.exe
+D:\Project\SuperGenerator\SuperGen\bin\Debug\SuperGen.pdb
+D:\Project\SuperGenerator\SuperGen\obj\Debug\SuperGen.exe
+D:\Project\SuperGenerator\SuperGen\obj\Debug\SuperGen.pdb
