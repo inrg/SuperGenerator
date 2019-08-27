@@ -4,3 +4,4 @@ D:\Project\SuperGenerator\SuperGen\bin\Release\SuperGen.exe
 D:\Project\SuperGenerator\SuperGen\bin\Release\SuperGen.pdb
 D:\Project\SuperGenerator\SuperGen\obj\Release\SuperGen.exe
 D:\Project\SuperGenerator\SuperGen\obj\Release\SuperGen.pdb
+D:\Project\SuperGenerator\SuperGen\obj\Release\SuperGen.csprojAssemblyReference.cache

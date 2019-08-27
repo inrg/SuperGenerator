@@ -9,54 +9,133 @@ using SharedProject;
 namespace SuperGen {
     class Program {
         static List<string> _ruleList = new List<string>();
+
+        #region config
+        static string _registryBasePath = "Software\\SuperGenerator";
+        static string _registryNameRule = "Rules";
+        static string _defaultPattern = "__[0-9a-z]{32}__";
         static int _defaultCount = 1;
-        static RegistryKey _registryKey;
+        static bool _enableHistory = true;
+        static bool _useLastHistory = true;
+        static int _historyNumber = 10;
+        #endregion
+
+        static RegistryKey _registryRulesKey, _registryConfigKey;
+
         static void Main(string[] args) {
-            _registryKey = Registry.CurrentUser.OpenSubKey("Software\\SuperGenerator\\Rules", RegistryRights.FullControl);
-            if (_registryKey == null) {
-                _registryKey = Registry.CurrentUser.CreateSubKey("Software\\SuperGenerator\\Rules");
+            TryReadConfig();
+            TryReadCustomRules();
 
-                _registryKey?.SetValue("ID32", "__[0-9a-z]{32}__");
-            }
-
+            bool enablePause = false;
             for (int i = 0; i < args.Length; i++) {
                 if (args[i].StartsWith("-")) {
-                    if (args[i].TrimStart('-').Equals("c", StringComparison.OrdinalIgnoreCase)) {
+                    if (args[i].TrimStart('-').Equals("p"/*pause*/, StringComparison.OrdinalIgnoreCase)) {
+                        enablePause = true;
+                    } else if (args[i].TrimStart('-').Equals("c"/*generator count*/, StringComparison.OrdinalIgnoreCase)) {
                         if ((i + 1) > args.Length || !int.TryParse(args[i + 1].Trim(), out _defaultCount)) {
                             Console.WriteLine("ERROR: Invalid parameter '-c'.");
                             return;
                         }
-                    }
 
-                    i += 1;
+                        i += 1;
+                    } else if (args[i].TrimStart('-').Equals("a"/*add/modify pattern to register*/, StringComparison.OrdinalIgnoreCase)) {
+                        while (true) {
+                            Console.WriteLine("Please input rule name(Enter empty modify default rule):");
+                            string name = Console.ReadLine();
+                            if (string.IsNullOrEmpty(name?.Trim()))
+                                break;
+
+                            Console.WriteLine("Please input rule string(Enter empty exit):");
+                            string rule = Console.ReadLine();
+                            if (string.IsNullOrEmpty(rule?.Trim()))
+                                break;
+
+                            _registryRulesKey.SetValue(name ?? "", rule);
+
+                            Console.WriteLine("Success! Do you want to continue(Exit press ESC/n)?");
+                            switch (Console.ReadKey(false).Key) {
+                                case ConsoleKey.N:
+                                case ConsoleKey.Escape:
+                                    goto _app_end_;
+                            }
+                        }
+                    }
                 } else {
                     _ruleList.Add(args[i].Trim());
                 }
             }
-
-            ReadConfigAndSet();
-
+            
             for (int i = 0; i < _defaultCount; i++) {
                 foreach (var rule in _ruleList) {
                     Console.WriteLine(SuperGenerator.From(rule).Make());
                 }
             }
 
+_app_end_:
+            TryRefreshConfig();
 
-            _registryKey?.Close();
+            _registryConfigKey?.Close();
+            _registryRulesKey?.Close();
+
+            if (enablePause)
+                system("pause");
         }
 
-        static void ReadConfigAndSet() {
-            _registryKey = _registryKey ?? Registry.LocalMachine.OpenSubKey("Software\\SuperGenerator\\Rules", RegistryKeyPermissionCheck.ReadWriteSubTree);
+        static RegistryKey TryReadConfig(string configNodeName = "Config") {
+            _registryConfigKey = Registry.CurrentUser.OpenSubKey($"{_registryBasePath}\\{configNodeName}", true);
+            if (_registryConfigKey == null) {
+                _registryConfigKey = Registry.CurrentUser.CreateSubKey($"{_registryBasePath}\\{configNodeName}", RegistryKeyPermissionCheck.ReadWriteSubTree);
 
-                if (_registryKey == null) return;
+                //default config
+                _registryConfigKey?.SetValue("RegistryBasePath", _registryBasePath);
+                _registryConfigKey?.SetValue("DefaultPattern", _defaultPattern);
+                _registryConfigKey?.SetValue("EnableHistory", _enableHistory);
+                _registryConfigKey?.SetValue("UseLastHistory", _useLastHistory);
+                _registryConfigKey?.SetValue("DefaultCount", _defaultCount);
+                _registryConfigKey?.SetValue("HistoryCount", _historyNumber);
+                return _registryConfigKey;
+            }
 
-                var names = _registryKey.GetValueNames();
-                for (int i = 0; i < _ruleList.Count; i++)
-                {
-                    if (names.Contains(_ruleList[i]))
-                        _ruleList[i] = _registryKey.GetValue(_ruleList[i])?.ToString();
+            _registryBasePath = _registryConfigKey.GetValue("RegistryBasePath").ToString();
+            _defaultPattern = _registryConfigKey.GetValue("DefaultPattern").ToString();
+            bool.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _enableHistory);
+            bool.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _useLastHistory);
+            int.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _defaultCount);
+            int.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _historyNumber);
+            return _registryConfigKey;
+        }
+
+        static bool TryRefreshConfig() {
+            if (_registryConfigKey == null)
+                return false;
+
+            string dpOld = _registryConfigKey.GetValue("DefaultPattern")?.ToString();
+            string dpNew = _registryRulesKey.GetValue("")?.ToString();
+            if (!string.IsNullOrEmpty(dpNew)) {
+                if (string.IsNullOrEmpty(dpOld) || !dpNew.Equals(dpOld)) {
+                    _registryConfigKey.SetValue("DefaultPattern", dpNew);
                 }
+            }
+
+            return true;
         }
+
+        static RegistryKey TryReadCustomRules() {
+            _registryRulesKey = Registry.CurrentUser.OpenSubKey($"{_registryBasePath}\\{_registryNameRule}", true);
+            if (_registryRulesKey == null) {
+                _registryRulesKey = Registry.CurrentUser.CreateSubKey($"{_registryBasePath}\\{_registryNameRule}", RegistryKeyPermissionCheck.ReadWriteSubTree);
+
+                _registryRulesKey?.SetValue("", _defaultPattern);
+            } else {
+                _defaultPattern = _registryRulesKey?.GetValue("").ToString();
+            }
+
+            return _registryRulesKey;
+        }
+        
+        [System.Runtime.InteropServices.DllImport("msvcrt.dll")]
+        public static extern bool system(string str);
     }
+
+
 }

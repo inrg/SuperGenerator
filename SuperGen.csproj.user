@@ -4,6 +4,6 @@
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-c 12 "__[0-9a-z]{32}__"</StartArguments>
+    <StartArguments>-a -p -c 12 "__[0-9a-z]{32}__"</StartArguments>
   </PropertyGroup>
 </Project>
