@@ -64,14 +64,19 @@ namespace SuperGen {
                     _ruleList.Add(args[i].Trim());
                 }
             }
-            
+
+            if (!_ruleList.Any()) {
+                _ruleList.Add(_defaultPattern);
+            }
+
+            _defaultCount |= 1;
             for (int i = 0; i < _defaultCount; i++) {
                 foreach (var rule in _ruleList) {
                     Console.WriteLine(SuperGenerator.From(rule).Make());
                 }
             }
 
-_app_end_:
+            _app_end_:
             TryRefreshConfig();
 
             _registryConfigKey?.Close();
@@ -99,9 +104,9 @@ _app_end_:
             _registryBasePath = _registryConfigKey.GetValue("RegistryBasePath").ToString();
             _defaultPattern = _registryConfigKey.GetValue("DefaultPattern").ToString();
             bool.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _enableHistory);
-            bool.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _useLastHistory);
-            int.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _defaultCount);
-            int.TryParse(_registryConfigKey.GetValue("EnableHistory").ToString(), out _historyNumber);
+            bool.TryParse(_registryConfigKey.GetValue("UseLastHistory").ToString(), out _useLastHistory);
+            int.TryParse(_registryConfigKey.GetValue("DefaultCount").ToString(), out _defaultCount);
+            int.TryParse(_registryConfigKey.GetValue("HistoryCount").ToString(), out _historyNumber);
             return _registryConfigKey;
         }
 
@@ -132,7 +137,7 @@ _app_end_:
 
             return _registryRulesKey;
         }
-        
+
         [System.Runtime.InteropServices.DllImport("msvcrt.dll")]
         public static extern bool system(string str);
     }
