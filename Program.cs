@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
+using System.Threading;
+using System.Windows;
+using System.Windows.Forms;
 using Microsoft.Win32;
 using SharedProject;
 
@@ -22,6 +26,7 @@ namespace SuperGen {
 
         static RegistryKey _registryRulesKey, _registryConfigKey;
 
+        [STAThread]
         static void Main(string[] args) {
             TryReadConfig();
             TryReadCustomRules();
@@ -69,13 +74,17 @@ namespace SuperGen {
                 _ruleList.Add(_defaultPattern);
             }
 
-            _defaultCount |= 1;
-            for (int i = 0; i < _defaultCount; i++) {
-                foreach (var rule in _ruleList) {
-                    Console.WriteLine(SuperGenerator.From(rule).Make());
+            using (TextWriter tw = new StringWriter()) {
+                Console.SetOut(tw);
+                _defaultCount |= 1;
+                for (int i = 0; i < _defaultCount; i++) {
+                    foreach (var rule in _ruleList) {
+                        Console.WriteLine(SuperGenerator.From(rule).Make());
+                    }
                 }
+                Clipboard.SetText(tw.ToString());
             }
-
+            
             _app_end_:
             TryRefreshConfig();
 
@@ -136,6 +145,24 @@ namespace SuperGen {
             }
 
             return _registryRulesKey;
+        }
+
+        static bool CopyToClipboard(object data) {
+            Thread staThread = new Thread(x =>
+            {
+                try
+                {
+                    Clipboard.SetDataObject(data);
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+            });
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
+            staThread.Join();
+            return true;
         }
 
         [System.Runtime.InteropServices.DllImport("msvcrt.dll")]
