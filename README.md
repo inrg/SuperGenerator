@@ -1,5 +1,5 @@
 # SuperGenerator
-随机字符串自定义生成规则生成工具
+自定义规则的随机字符串生成工具
 
 
 ![pic1](https://github.com/inrg/SuperGenerator/blob/master/pic/pic1.jpg?raw=true)
