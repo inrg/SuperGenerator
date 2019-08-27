@@ -1,5 +1,29 @@
 # SuperGenerator
-Random String Generation Tool for Custom Rules
+随机字符串自定义生成规则生成工具
 
 
 ![pic1](https://github.com/inrg/SuperGenerator/blob/master/pic/pic1.jpg?raw=true)
+
+--- 8位随机密码
+`[A-Za-z0-9!@#$%^&*()_+]{8}`
+
+--- 8位或16位随机密码
+`[A-Za-z0-9!@#$%^&*()_+]{8,16}`
+
+--- 8位到16位随机密码
+`[A-Za-z0-9!@#$%^&*()_+]{8-16}`
+
+--- 必须字母开头
+`[A-Za-z]{1}[A-Za-z0-9!@#$%^&*()_+]{8-16}`
+
+--- 必须大写字母开头
+`[A-Z]{1}[A-Za-z0-9!@#$%^&*()_+]{8-16}`
+
+--- 大写字母ABC开头
+`ABC[A-Za-z0-9!@#$%^&*()_+]{8-16}`
+
+--- 大写字母ABC开头，XYZ结尾
+`ABC[A-Za-z0-9!@#$%^&*()_+]{8-16}XYZ`
+
+--- GUID格式
+`[a-z0-9A-Z]{8}-[a-z0-9A-Z]{4}-[a-z0-9A-Z]{4}-[a-z0-9A-Z]{4}-[a-z0-9A-Z]{12}`
