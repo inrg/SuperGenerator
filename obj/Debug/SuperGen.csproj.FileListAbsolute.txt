@@ -4,3 +4,9 @@ D:\Project\SuperGenerator\SuperGen\bin\Debug\SuperGen.exe
 D:\Project\SuperGenerator\SuperGen\bin\Debug\SuperGen.pdb
 D:\Project\SuperGenerator\SuperGen\obj\Debug\SuperGen.exe
 D:\Project\SuperGenerator\SuperGen\obj\Debug\SuperGen.pdb
+D:\Projects\SuperGenerator\bin\Debug\SuperGen.exe.config
+D:\Projects\SuperGenerator\bin\Debug\SuperGen.exe
+D:\Projects\SuperGenerator\bin\Debug\SuperGen.pdb
+D:\Projects\SuperGenerator\obj\Debug\SuperGen.csproj.CoreCompileInputs.cache
+D:\Projects\SuperGenerator\obj\Debug\SuperGen.exe
+D:\Projects\SuperGenerator\obj\Debug\SuperGen.pdb

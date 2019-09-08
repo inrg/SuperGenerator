@@ -74,6 +74,7 @@ namespace SuperGen {
                 _ruleList.Add(_defaultPattern);
             }
 
+            var defaultOut = Console.Out;
             using (TextWriter tw = new StringWriter()) {
                 Console.SetOut(tw);
                 _defaultCount |= 1;
@@ -82,9 +83,19 @@ namespace SuperGen {
                         Console.WriteLine(SuperGenerator.From(rule).Make());
                     }
                 }
-                Clipboard.SetText(tw.ToString());
+
+                try
+                {
+                    Clipboard.SetText(tw.ToString());
+                }
+                catch (Exception e)
+                {
+                    Console.SetOut(defaultOut);
+                    Console.WriteLine(tw.ToString());
+                    if (!enablePause) system("pause");
+                }
             }
-            
+
             _app_end_:
             TryRefreshConfig();
 
